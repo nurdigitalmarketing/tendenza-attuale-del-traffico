@@ -10,7 +10,7 @@ def extract_update_name(text):
     return text
 
 def generate_traffic_plot_with_predefined_updates():
-    st.title("Tendenza attuale del traffico")
+    st.title("Tendenza Attuale del Traffico")
 
     st.markdown("""
 
