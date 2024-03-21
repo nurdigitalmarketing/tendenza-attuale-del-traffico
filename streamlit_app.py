@@ -33,10 +33,10 @@ def generate_traffic_plot_with_predefined_updates():
     
     - All'interno dello script, è presente un elenco degli update core di Google dal 2022 ad oggi. 
     - È consigliabile verificare regolarmente se ci sono stati nuovi aggiornamenti visitando [Google Search Central](https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history) e aggiornare di conseguenza l'elenco degli update nell'applicazione.
-    
-    Questa app serve come strumento di analisi visiva per aiutarti a comprendere meglio come gli aggiornamenti di Google possano influenzare il traffico organico al tuo sito web, permettendoti di prendere decisioni informate per ottimizzare la tua strategia SEO.
     """
     )
+
+    st.markdown("---")
 
     uploaded_file = st.file_uploader("Carica il file CSV dei dati di traffico", type="csv")
     if uploaded_file is not None:
