@@ -22,7 +22,7 @@ def generate_traffic_plot_with_predefined_updates():
     
     1. Vai su **Ahrefs - Site Explorer**.
     2. Seleziona **Panoramica**, poi **Ricerca Organica**.
-    3. Imposta il periodo di tempo a **1 anno** e la granularità a **Giornaliera**.
+    3. Imposta il periodo di tempo a **1 anno** (o 2 anni a seconda della storicità) e la granularità a **Giornaliera**.
     4. Clicca su **Esporta** per scaricare i dati.
     5. Apri il file esportato e rimuovi le prime righe, mantenendo solo i dati relativi al numero di utenti.
     6. Rinomina la colonna A in "Date" e la colonna B in "Organic Traffic", e salva il file in formato `.csv`.
