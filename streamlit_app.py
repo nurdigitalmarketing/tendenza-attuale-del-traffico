@@ -32,10 +32,12 @@ def generate_traffic_plot_with_predefined_updates():
 
         y_position = data['Organic Traffic'].max() - (0.4 * data['Organic Traffic'].max())
         for date, update_name in zip(update_dates, update_names_list):
-            if date in dates.tolist():
-                plt.axvline(date, linestyle='--')
-                plt.annotate(update_name, (date, y_position), textcoords="offset points", xytext=(20,-30),
-                             ha='center', rotation=90, fontsize=9, alpha=0.8)
+            # Controlla se la data è compresa nel range delle date del dataset
+            if date >= dates.min() and date <= dates.max():
+                plt.axvline(date, linestyle='--', color='grey')  # Usa un colore più visibile
+                plt.text(date, y_position, update_name, rotation=90, color='black', fontsize=9, 
+                         ha='right', va='bottom', backgroundcolor='white')
+
 
         plt.title("Andamento del traffico da tutte le fonti di acquisizione")
         plt.xlabel("Data")
