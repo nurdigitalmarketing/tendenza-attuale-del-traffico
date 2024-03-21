@@ -14,7 +14,7 @@ def generate_traffic_plot_with_predefined_updates():
 
     st.markdown("""
 
-    Questa applicazione è stata creata per fornire agli analisti SEO e ai proprietari di siti web uno strumento intuitivo per visualizzare l'impatto degli aggiornamenti dell'algoritmo di Google sul traffico organico del loro sito. Con questa app, gli utenti possono facilmente generare un grafico che mostra la correlazione tra il traffico organico giornaliero e le date degli aggiornamenti core di Google.
+    Questa funzione è stata progettata specificamente per generare il grafico visualizzato nella pagina "Tendenza attuale del traffico" nel [SEO Forecast](https://docs.google.com/presentation/d/1k5iNBxEdcb7FFvzp2NGGXWncx6gkMOrM3yXT20wdjE4/edit#slide=id.g285d81d4829_0_0). Il grafico mira a fornire un'analisi visiva dell'impatto degli aggiornamenti dell'algoritmo di Google sul traffico organico, facilitando l'interpretazione delle tendenze e l'identificazione di potenziali correlazioni tra gli aggiornamenti e le variazioni del traffico.
     
     ## Come Funziona
     
