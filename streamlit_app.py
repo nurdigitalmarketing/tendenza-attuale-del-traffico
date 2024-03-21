@@ -10,7 +10,33 @@ def extract_update_name(text):
     return text
 
 def generate_traffic_plot_with_predefined_updates():
-    st.title("Analisi del Traffico Organico e Aggiornamenti di Google")
+    st.title("Analisi del Traffico Organico in Relazione agli Update di Google")
+
+    st.markdown("""
+
+    Questa applicazione è stata creata per fornire agli analisti SEO e ai proprietari di siti web uno strumento intuitivo per visualizzare l'impatto degli aggiornamenti dell'algoritmo di Google sul traffico organico del loro sito. Con questa app, gli utenti possono facilmente generare un grafico che mostra la correlazione tra il traffico organico giornaliero e le date degli aggiornamenti core di Google.
+    
+    ## Come Funziona
+    
+    Per utilizzare questa applicazione, segui questi passi:
+    
+    1. Vai su **Ahrefs - Site Explorer**.
+    2. Seleziona **Panoramica**, poi **Ricerca Organica**.
+    3. Imposta il periodo di tempo a **1 anno** e la granularità a **Giornaliera**.
+    4. Clicca su **Esporta** per scaricare i dati.
+    5. Apri il file esportato e rimuovi le prime righe, mantenendo solo i dati relativi al numero di utenti.
+    6. Rinomina la colonna A in "Date" e la colonna B in "Organic Traffic", e salva il file in formato `.csv`.
+    
+    Una volta preparato il file `.csv`, caricalo in questa app. Lo script genererà automaticamente un grafico che sovrappone il traffico organico del tuo sito alle date degli update di Google. 
+    
+    ### Note Importanti
+    
+    - All'interno dello script, è presente un elenco degli update core di Google dal 2022 ad oggi. 
+    - È consigliabile verificare regolarmente se ci sono stati nuovi aggiornamenti visitando [Google Search Central](https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history) e aggiornare di conseguenza l'elenco degli update nell'applicazione.
+    
+    Questa app serve come strumento di analisi visiva per aiutarti a comprendere meglio come gli aggiornamenti di Google possano influenzare il traffico organico al tuo sito web, permettendoti di prendere decisioni informate per ottimizzare la tua strategia SEO.
+    """
+    )
 
     uploaded_file = st.file_uploader("Carica il file CSV dei dati di traffico", type="csv")
     if uploaded_file is not None:
