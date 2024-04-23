@@ -22,27 +22,25 @@ def generate_traffic_plot_with_predefined_updates():
     with col2:
         st.title('Tendenza del Traffico Attuale')
         st.markdown('###### by [NUR® Digital Marketing](https://www.nur.it)')
-        st.markdown("""
-        Questa funzione è stata progettata specificamente per generare il grafico visualizzato nella pagina "Tendenza attuale del traffico" nel [SEO Forecast](https://docs.google.com/presentation/d/1k5iNBxEdcb7FFvzp2NGGXWncx6gkMOrM3yXT20wdjE4/edit#slide=id.g285d81d4829_0_0). Il grafico mira a fornire un'analisi visiva dell'impatto degli aggiornamenti dell'algoritmo di Google sul traffico organico, facilitando l'interpretazione delle tendenze e l'identificazione di potenziali correlazioni tra gli aggiornamenti e le variazioni del traffico.
 
-        ## Come Funziona
-        
-        Per utilizzare questa applicazione, segui questi passi:
-        
-        1. Vai su **Ahrefs - Site Explorer**.
-        2. Seleziona **Panoramica**, poi **Ricerca Organica**.
-        3. Imposta il periodo di tempo a **1 anno (o 2 se disponibili)** e la granularità a **Giornaliera**.
-        4. Clicca su **Esporta** per scaricare i dati.
-        5. Apri il file esportato e rimuovi le prime righe, mantenendo solo i dati relativi al numero di utenti.
-        6. Rinomina la colonna A in "Date" e la colonna B in "Organic Traffic", e salva il file in formato `.csv`.
+        with st.expander("Come Funziona"):
+            st.markdown("""
+            Per utilizzare questa applicazione, segui questi passi:
 
-        Una volta preparato il file `.csv`, caricalo in questa app. Lo script genererà automaticamente un grafico che sovrappone il traffico organico del tuo sito alle date degli update di Google. 
-        
-        ### Note Importanti
-        
-        - All'interno dello script, è presente un elenco degli update core di Google dal 2022 ad oggi. 
-        - È consigliabile verificare regolarmente se ci sono stati nuovi aggiornamenti visitando [Google Search Central](https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history) e aggiornare di conseguenza l'elenco degli update nell'applicazione.
-        """)
+            1. Vai su **Ahrefs - Site Explorer**.
+            2. Seleziona **Panoramica**, poi **Ricerca Organica**.
+            3. Imposta il periodo di tempo a **1 anno (o 2 se disponibili)** e la granularità a **Giornaliera**.
+            4. Clicca su **Esporta** per scaricare i dati.
+            5. Apri il file esportato e rimuovi le prime righe, mantenendo solo i dati relativi al numero di utenti.
+            6. Rinomina la colonna A in "Date" e la colonna B in "Organic Traffic", e salva il file in formato `.csv`.
+            """)
+
+        with st.expander("Note Importanti"):
+            st.markdown("""
+            - All'interno dello script, è presente un elenco degli update core di Google dal 2022 ad oggi.
+            - È consigliabile verificare regolarmente se ci sono stati nuovi aggiornamenti visitando [Google Search Central](https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history) e aggiornare di conseguenza l'elenco degli update nell'applicazione.
+            """)
+
         st.markdown("---")
         uploaded_file = st.file_uploader("Carica il file CSV dei dati di traffico", type="csv")
         if uploaded_file is not None:
@@ -60,7 +58,7 @@ def generate_traffic_plot_with_predefined_updates():
             dates = pd.to_datetime(data['Date'])
             
             plt.figure(figsize=(15,7))
-            plt.plot(dates, data['Organic Traffic'], label='Utenti')
+            plt.plot(dates, data['Organic Traffic'], label='Users')
 
             y_position = data['Organic Traffic'].max() - (0.4 * data['Organic Traffic'].max())
             for date, update_name in zip(update_dates, update_names_list):
