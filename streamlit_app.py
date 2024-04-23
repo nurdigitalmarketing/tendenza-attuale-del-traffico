@@ -60,7 +60,7 @@ def generate_traffic_plot_with_predefined_updates():
             dates = pd.to_datetime(data['Date'])
             
             plt.figure(figsize=(15,7))
-            plt.plot(dates, data['Organic Traffic'], label='Users')
+            plt.plot(dates, data['Traffico Organico'], label='Utenti')
 
             y_position = data['Organic Traffic'].max() - (0.4 * data['Organic Traffic'].max())
             for date, update_name in zip(update_dates, update_names_list):
