@@ -11,7 +11,7 @@ def extract_update_name(text):
 
 def generate_traffic_plot_with_predefined_updates():
    # Crea una riga con 3 colonne
-    col1, col2 = st.columns([1, 7])
+col1, col2 = st.columns([1, 7])
 
 # Colonna per l'immagine (a sinistra)
 with col1:
