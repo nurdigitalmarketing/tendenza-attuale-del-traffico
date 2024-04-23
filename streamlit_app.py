@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import datetime
-import matplotlib.pyplot as plt
+import plotly.express as px
 
 def extract_update_name(text):
     if "update" in text.lower():
@@ -10,15 +10,11 @@ def extract_update_name(text):
     return text
 
 def generate_traffic_plot_with_predefined_updates():
-    # Create a row with 2 columns
     col1, col2 = st.columns([1, 7])
 
-    # Column for the image (left)
     with col1:
-        # Make sure to have an image at the specified path or pass a direct URL
         st.image("https://raw.githubusercontent.com/nurdigitalmarketing/previsione-del-traffico-futuro/9cdbf5d19d9132129474936c137bc8de1a67bd35/Nur-simbolo-1080x1080.png", width=80)
 
-    # Column for the title and the text "by NUR® Digital Marketing" (center)
     with col2:
         st.title('Tendenza del Traffico Attuale')
         st.markdown('###### by [NUR® Digital Marketing](https://www.nur.it)')
@@ -46,47 +42,29 @@ def generate_traffic_plot_with_predefined_updates():
         if uploaded_file is not None:
             data = pd.read_csv(uploaded_file)
             update_dates_list, update_names_list = get_predefined_updates()
-            
-            if st.checkbox("Vuoi aggiungere altri aggiornamenti?"):
-                new_update_date = st.text_input("Inserisci la data dell'update (formato '14 Sep 2023'):")
-                new_update_name = st.text_input("Inserisci il nome dell'update fino alla parola 'update':")
-                if new_update_date and new_update_name:
-                    update_dates_list.append(new_update_date)
-                    update_names_list.append(new_update_name)
-            
             update_dates = [datetime.datetime.strptime(date, "%d %b %Y") for date in update_dates_list]
             dates = pd.to_datetime(data['Date'])
+            data['Date'] = dates
             
-            plt.figure(figsize=(15,7))
-            plt.plot(dates, data['Organic Traffic'], label='Utenti')
-
-            y_position = data['Organic Traffic'].max() - (0.4 * data['Organic Traffic'].max())
-            for date, update_name in zip(update_dates, update_names_list):
-                # Check if the date is within the range of dataset dates
+            fig = px.line(data, x='Date', y='Organic Traffic', title='Andamento del traffico da tutte le fonti di acquisizione', labels={'Date': 'Data', 'Organic Traffic': 'Utenti'})
+            
+            for date, name in zip(update_dates, update_names_list):
                 if date >= dates.min() and date <= dates.max():
-                    plt.axvline(date, linestyle='--', color='grey')  # Use a more visible color
-                    plt.text(date, y_position, update_name, rotation=90, color='black', fontsize=9, 
-                             ha='right', va='bottom', backgroundcolor='white')
+                    fig.add_vline(x=date, line_dash="dash", line_color="grey", annotation_text=name, annotation_position="top left")
 
-            plt.title("Andamento del traffico da tutte le fonti di acquisizione")
-            plt.xlabel("Data")
-            plt.ylabel("Utenti")
-            plt.legend()
-            plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-            plt.tight_layout()
-            
-            st.pyplot(plt)
+            fig.update_layout(xaxis=dict(tickformat="%d %b %Y"), hovermode="x")
+            fig.update_traces(mode="lines+markers")
+            st.plotly_chart(fig, use_container_width=True)
 
 def get_predefined_updates():
-    update_dates_list = [
+    # Elenco degli update core di Google
+    return [
         '5 Mar 2024', '8 Nov 2023', '2 Nov 2023', '5 Oct 2023', '14 Sep 2023', '22 Aug 2023', '12 Apr 2023', '15 Mar 2023', '21 Feb 2023',
         '14 Dec 2022', '5 Dec 2022', '19 Oct 2022', '20 Sep 2022', '12 Sep 2022',
         '25 Aug 2022', '27 Jul 2022', '25 May 2022', '23 Mar 2022', '22 Feb 2022', '1 Dec 2021',
         '17 Nov 2021', '3 Nov 2021', '26 Jul 2021', '1 Jul 2021', '28 Jun 2021', '23 Jun 2021',
         '15 Jun 2021', '2 Jun 2021', '8 Apr 2021'
-    ]
-    
-    update_names_list = [
+    ], [
         extract_update_name(name) for name in [
             'Released the March 2024 core update',
             'Released the November 2023 reviews update',
@@ -119,7 +97,6 @@ def get_predefined_updates():
             'Released the April 2021 product reviews update'
         ]
     ]
-    return update_dates_list, update_names_list
 
 if __name__ == "__main__":
     generate_traffic_plot_with_predefined_updates()
