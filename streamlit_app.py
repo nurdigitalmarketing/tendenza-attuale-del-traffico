@@ -49,10 +49,10 @@ def generate_traffic_plot_with_predefined_updates():
             fig = px.line(data, x='Date', y='Organic Traffic', title='Andamento del traffico da tutte le fonti di acquisizione', labels={'Date': 'Data', 'Organic Traffic': 'Utenti'})
             
             for date, name in zip(update_dates, update_names_list):
-                if date >= dates.min() and date <= dates.max():
+                if dates.min() <= date <= dates.max():  # Corrected date comparison
                     fig.add_vline(x=date, line_dash="dash", line_color="grey", annotation_text=name, annotation_position="top left")
 
-            fig.update_layout(xaxis=dict(tickformat="%d %b %Y"), hovermode="x")
+            fig.update_layout(xaxis=dict(tickformat="%d %b %Y"), hovermode="x unified")
             fig.update_traces(mode="lines+markers")
             st.plotly_chart(fig, use_container_width=True)
 
