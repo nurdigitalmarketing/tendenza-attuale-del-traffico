@@ -10,80 +10,74 @@ def extract_update_name(text):
     return text
 
 def generate_traffic_plot_with_predefined_updates():
-   # Crea una riga con 3 colonne
+    # Create a row with 2 columns
     col1, col2 = st.columns([1, 7])
 
-# Colonna per l'immagine (a sinistra)
-with col1:
-    # Assicurati di avere un'immagine nel percorso specificato o passa un URL diretto
-    st.image("https://raw.githubusercontent.com/nurdigitalmarketing/previsione-del-traffico-futuro/9cdbf5d19d9132129474936c137bc8de1a67bd35/Nur-simbolo-1080x1080.png", width=80)
+    # Column for the image (left)
+    with col1:
+        # Make sure to have an image at the specified path or pass a direct URL
+        st.image("https://raw.githubusercontent.com/nurdigitalmarketing/previsione-del-traffico-futuro/9cdbf5d19d9132129474936c137bc8de1a67bd35/Nur-simbolo-1080x1080.png", width=80)
 
-# Colonna per il titolo e il testo "by NUR® Digital Marketing" (al centro)
-with col2:
-    st.title('Tendenza del Traffico Attuale')
-    st.markdown('###### by [NUR® Digital Marketing](https://www.nur.it)')
+    # Column for the title and the text "by NUR® Digital Marketing" (center)
+    with col2:
+        st.title('Tendenza del Traffico Attuale')
+        st.markdown('###### by [NUR® Digital Marketing](https://www.nur.it)')
+        st.markdown("""
+        Questa funzione è stata progettata specificamente per generare il grafico visualizzato nella pagina "Tendenza attuale del traffico" nel [SEO Forecast](https://docs.google.com/presentation/d/1k5iNBxEdcb7FFvzp2NGGXWncx6gkMOrM3yXT20wdjE4/edit#slide=id.g285d81d4829_0_0). Il grafico mira a fornire un'analisi visiva dell'impatto degli aggiornamenti dell'algoritmo di Google sul traffico organico, facilitando l'interpretazione delle tendenze e l'identificazione di potenziali correlazioni tra gli aggiornamenti e le variazioni del traffico.
 
-    st.markdown("""
-
-    Questa funzione è stata progettata specificamente per generare il grafico visualizzato nella pagina "Tendenza attuale del traffico" nel [SEO Forecast](https://docs.google.com/presentation/d/1k5iNBxEdcb7FFvzp2NGGXWncx6gkMOrM3yXT20wdjE4/edit#slide=id.g285d81d4829_0_0). Il grafico mira a fornire un'analisi visiva dell'impatto degli aggiornamenti dell'algoritmo di Google sul traffico organico, facilitando l'interpretazione delle tendenze e l'identificazione di potenziali correlazioni tra gli aggiornamenti e le variazioni del traffico.
-    
-    ## Come Funziona
-    
-    Per utilizzare questa applicazione, segui questi passi:
-    
-    1. Vai su **Ahrefs - Site Explorer**.
-    2. Seleziona **Panoramica**, poi **Ricerca Organica**.
-    3. Imposta il periodo di tempo a **1 anno (o 2 se dispoinibili)** e la granularità a **Giornaliera**.
-    4. Clicca su **Esporta** per scaricare i dati.
-    5. Apri il file esportato e rimuovi le prime righe, mantenendo solo i dati relativi al numero di utenti.
-    6. Rinomina la colonna A in "Date" e la colonna B in "Organic Traffic", e salva il file in formato `.csv`.
-    
-    Una volta preparato il file `.csv`, caricalo in questa app. Lo script genererà automaticamente un grafico che sovrappone il traffico organico del tuo sito alle date degli update di Google. 
-    
-    ### Note Importanti
-    
-    - All'interno dello script, è presente un elenco degli update core di Google dal 2022 ad oggi. 
-    - È consigliabile verificare regolarmente se ci sono stati nuovi aggiornamenti visitando [Google Search Central](https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history) e aggiornare di conseguenza l'elenco degli update nell'applicazione.
-    """
-    )
-
-    st.markdown("---")
-
-    uploaded_file = st.file_uploader("Carica il file CSV dei dati di traffico", type="csv")
-    if uploaded_file is not None:
-        data = pd.read_csv(uploaded_file)
-        update_dates_list, update_names_list = get_predefined_updates()
+        ## Come Funziona
         
-        if st.checkbox("Vuoi aggiungere altri aggiornamenti?"):
-            new_update_date = st.text_input("Inserisci la data dell'update (formato '14 Sep 2023'):")
-            new_update_name = st.text_input("Inserisci il nome dell'update fino alla parola 'update':")
-            if new_update_date and new_update_name:
-                update_dates_list.append(new_update_date)
-                update_names_list.append(new_update_name)
+        Per utilizzare questa applicazione, segui questi passi:
         
-        update_dates = [datetime.datetime.strptime(date, "%d %b %Y") for date in update_dates_list]
-        dates = pd.to_datetime(data['Date'])
+        1. Vai su **Ahrefs - Site Explorer**.
+        2. Seleziona **Panoramica**, poi **Ricerca Organica**.
+        3. Imposta il periodo di tempo a **1 anno (o 2 se disponibili)** e la granularità a **Giornaliera**.
+        4. Clicca su **Esporta** per scaricare i dati.
+        5. Apri il file esportato e rimuovi le prime righe, mantenendo solo i dati relativi al numero di utenti.
+        6. Rinomina la colonna A in "Date" e la colonna B in "Organic Traffic", e salva il file in formato `.csv`.
+
+        Una volta preparato il file `.csv`, caricalo in questa app. Lo script genererà automaticamente un grafico che sovrappone il traffico organico del tuo sito alle date degli update di Google. 
         
-        plt.figure(figsize=(15,7))
-        plt.plot(dates, data['Organic Traffic'], label='Users')
-
-        y_position = data['Organic Traffic'].max() - (0.4 * data['Organic Traffic'].max())
-        for date, update_name in zip(update_dates, update_names_list):
-            # Controlla se la data è compresa nel range delle date del dataset
-            if date >= dates.min() and date <= dates.max():
-                plt.axvline(date, linestyle='--', color='grey')  # Usa un colore più visibile
-                plt.text(date, y_position, update_name, rotation=90, color='black', fontsize=9, 
-                         ha='right', va='bottom', backgroundcolor='white')
-
-
-        plt.title("Andamento del traffico da tutte le fonti di acquisizione")
-        plt.xlabel("Data")
-        plt.ylabel("Utenti")
-        plt.legend()
-        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-        plt.tight_layout()
+        ### Note Importanti
         
-        st.pyplot(plt)
+        - All'interno dello script, è presente un elenco degli update core di Google dal 2022 ad oggi. 
+        - È consigliabile verificare regolarmente se ci sono stati nuovi aggiornamenti visitando [Google Search Central](https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history) e aggiornare di conseguenza l'elenco degli update nell'applicazione.
+        """)
+        st.markdown("---")
+        uploaded_file = st.file_uploader("Carica il file CSV dei dati di traffico", type="csv")
+        if uploaded_file is not None:
+            data = pd.read_csv(uploaded_file)
+            update_dates_list, update_names_list = get_predefined_updates()
+            
+            if st.checkbox("Vuoi aggiungere altri aggiornamenti?"):
+                new_update_date = st.text_input("Inserisci la data dell'update (formato '14 Sep 2023'):")
+                new_update_name = st.text_input("Inserisci il nome dell'update fino alla parola 'update':")
+                if new_update_date and new_update_name:
+                    update_dates_list.append(new_update_date)
+                    update_names_list.append(new_update_name)
+            
+            update_dates = [datetime.datetime.strptime(date, "%d %b %Y") for date in update_dates_list]
+            dates = pd.to_datetime(data['Date'])
+            
+            plt.figure(figsize=(15,7))
+            plt.plot(dates, data['Organic Traffic'], label='Users')
+
+            y_position = data['Organic Traffic'].max() - (0.4 * data['Organic Traffic'].max())
+            for date, update_name in zip(update_dates, update_names_list):
+                # Check if the date is within the range of dataset dates
+                if date >= dates.min() and date <= dates.max():
+                    plt.axvline(date, linestyle='--', color='grey')  # Use a more visible color
+                    plt.text(date, y_position, update_name, rotation=90, color='black', fontsize=9, 
+                             ha='right', va='bottom', backgroundcolor='white')
+
+            plt.title("Andamento del traffico da tutte le fonti di acquisizione")
+            plt.xlabel("Data")
+            plt.ylabel("Utenti")
+            plt.legend()
+            plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+            plt.tight_layout()
+            
+            st.pyplot(plt)
 
 def get_predefined_updates():
     update_dates_list = [
