@@ -68,7 +68,7 @@ def generate_traffic_plot_with_predefined_updates():
                     plt.text(date, y_position, update_name, rotation=90, color='black', fontsize=9, 
                              ha='right', va='bottom', backgroundcolor='white')
 
-            plt.title("Andamento del traffico da tutte le fonti di acquisizione")
+            plt.title("Trend del traffico in relazione ai recenti Google Updates")
             plt.xlabel("Data")
             plt.ylabel("Utenti")
             plt.legend()
