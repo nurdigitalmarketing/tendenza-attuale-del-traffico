@@ -79,7 +79,7 @@ def generate_traffic_plot_with_predefined_updates():
 
 def get_predefined_updates():
     update_dates_list = [
-        '19 Dec 2024', '12 Dec 2024', '11 Nov 2024', '15 Aug 2024', '20 Jun 2024', '5 Mar 2024', '8 Nov 2023', '2 Nov 2023', '5 Oct 2023', '14 Sep 2023', '22 Aug 2023', '12 Apr 2023', '15 Mar 2023', '21 Feb 2023',
+        '26 Dec 2024', '12 Dec 2024', '11 Nov 2024', '15 Aug 2024', '20 Jun 2024', '5 Mar 2024', '8 Nov 2023', '2 Nov 2023', '5 Oct 2023', '14 Sep 2023', '22 Aug 2023', '12 Apr 2023', '15 Mar 2023', '21 Feb 2023',
         '14 Dec 2022', '5 Dec 2022', '19 Oct 2022', '20 Sep 2022', '12 Sep 2022',
         '25 Aug 2022', '27 Jul 2022', '25 May 2022', '23 Mar 2022', '22 Feb 2022', '1 Dec 2021',
         '17 Nov 2021', '3 Nov 2021', '26 Jul 2021', '1 Jul 2021', '28 Jun 2021', '23 Jun 2021',
